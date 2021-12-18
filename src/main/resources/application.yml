@@ -1,0 +1,10 @@
+server:
+  port: 8055
+spring:  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+custom:
+  logging:
+    dir: log
+    level: debug
