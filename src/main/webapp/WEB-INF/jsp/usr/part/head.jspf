@@ -1,0 +1,77 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- 제이쿼리 불러오기 -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- 테일윈드 불러오기 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
+<!-- 모바일에서 사이트가 PC에서의 픽셀크기 기준으로 작동하게 하기(반응형 하려면 필요) -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- 폰트어썸 불러오기 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+</head>
+<body class="bg-gray-100">
+<header class="top-bar h-20 bg-white">
+	<div class="container mx-auto h-full flex">
+		<div id="OpenBtn" class="flex-grow flex items-center text-3xl ml-1 mr-10">
+			<i class="fas fa-bars"></i>
+		</div>
+		<ul id="sidebar" class="text-center hidden fixed inset-0 bg-white w-2/6 h-screen sm:text-2xl">
+			<li class="py-10 hover:bg-blue-100">
+				<a href="main" class="py-9 px-9 sm:px-16">main</a>
+			</li>
+			<li class="py-10 hover:bg-blue-100">
+				<a href="fail_detail" class="py-9 px-9 sm:px-16">fail_detail</a>
+			</li>
+			<li class="py-10 hover:bg-blue-100">
+				<a href="daily_list" class="py-9 px-9 sm:px-16">daily_list</a>
+			</li>
+			<li class="py-10 hover:bg-blue-100">
+				<a href="repeat_list" class="py-9 px-5 sm:px-16">repeat_list</a>
+			</li>
+		</ul>
+		
+		<a href="/usr/main" class="font-bold text-3xl flex items-center ml-2 flex-grow">
+			<span>Detail Calindar</span>
+		</a>
+
+		<nav class="menu-box-1">
+			<ul class="flex h-full">
+				<li>
+					<a class="px-4 flex items-center h-full hover:underline" href="/usr/member/doLogout">
+						<span>로그아웃</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</header>
+
+<script>
+    $(document).ready(function(){
+        var target = $("#sidebar");
+
+        // 버튼을 클릭하면 사이드바 열림
+        $(document).on("click", "#OpenBtn", function (){
+            target.show();
+            target.addClass('shadow-2xl');
+        });
+
+        // 사이드바 외부를 클릭하면 사이드바 닫힘
+        $(document).mouseup(function (e){
+        	// 사이드바의 글씨가 안적힌 부분을 클릭했는지 확인
+            if(target.has(e.target).length==0) {
+                target.hide();
+                target.removeClass('shadow-2xl');
+            } 
+        });
+    });
+</script>
