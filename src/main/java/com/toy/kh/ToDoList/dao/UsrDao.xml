@@ -11,6 +11,28 @@
 		contents = #{contents}
 	</insert>
 	
+	<insert id="addDoCycle" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO CycleList
+		SET number = #{number},
+		contents = #{contents}
+	</insert>
+
+	<update id="addNumber">
+		UPDATE CycleList
+		<set>
+			number = number+1,
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="subNumber">
+		UPDATE CycleList
+		<set>
+			number = number-1,
+		</set>
+		WHERE id = #{id}
+	</update>
+
 	<select id="getListByDate" resultType="ToDoList">
 		SELECT *
 		FROM ToDoList
@@ -22,4 +44,35 @@
 		DELETE FROM ToDoList
 		WHERE id = #{id}
 	</delete>
+	
+	<delete id="deleteCycle">
+		DELETE FROM CycleList
+		WHERE id = #{id}
+	</delete>
+	
+	<select id="getListByZero" resultType="ToDoList">
+		SELECT *
+		FROM ToDoList
+       	WHERE doDate = #{doDate}
+		ORDER BY id DESC
+	</select>
+	
+	<select id="getCycles" resultType="CycleList">
+		SELECT *
+		FROM CycleList
+       	WHERE 1
+		ORDER BY `number` ASC
+	</select>
+	
+	<select id="getCycle" resultType="CycleList">
+		SELECT *
+		FROM CycleList
+       	WHERE id = #{id}
+	</select>
+	
+	<select id="getCountCycles" resultType="int">
+		SELECT COUNT(*)
+		FROM CycleList
+		WHERE 1
+	</select>
 </mapper>
