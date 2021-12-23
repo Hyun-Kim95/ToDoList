@@ -31,6 +31,11 @@
 	 			<input type="submit" class="btn-primary bg-blue-500 text-white font-bold py-1 px-4 rounded" value="추가">
 	 		</th>
 	 	</tr>
+	 	<tr class="border-b-2 bg-green-100">
+	 		<th class="border-r-2" colspan="1">분류</th>
+	 		<th class="border-r-2" colspan="5">내용</th>
+	 		<th class="border-r-2" colspan="1">삭제</th>
+	 	</tr>
 	 	<c:forEach items="${toDos}" var="toDo">
 	 		<tr class="border-b-2">
 	 			<th colspan="1" class="border-r-2">${toDo.classification}</th>
@@ -65,6 +70,11 @@
 	 		<th colspan="1">
 	 			<input type="submit" class="btn-primary bg-blue-500 text-white font-bold py-1 px-4 rounded" value="추가">
 	 		</th>
+	 	</tr>
+	 	<tr class="border-b-2 bg-green-100">
+	 		<th class="border-r-2" colspan="1">순서</th>
+	 		<th class="border-r-2" colspan="5">내용</th>
+	 		<th class="border-r-2" colspan="1">삭제</th>
 	 	</tr>
 	 	<c:forEach items="${cycles}" var="cycle">
 	 		<tr class="border-b-2">
