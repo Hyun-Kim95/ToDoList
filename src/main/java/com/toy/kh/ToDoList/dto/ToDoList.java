@@ -13,4 +13,6 @@ public class ToDoList {
 	private String classification;
 	private String contents;
 	private int success;
+	private String reason;
+	private int visible;
 }

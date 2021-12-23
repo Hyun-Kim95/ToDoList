@@ -60,5 +60,25 @@ public class UsrService {
 	public void subNumber(int id) {
 		usrDao.subNumber(id);
 	}
+
+	public List<ToDoList> getFailes(String start, String now) {
+		return usrDao.getFailes(start, now);
+	}
+
+	public List<ToDoList> getCountByClassificationAndPastday(String classification, String start, String now) {
+		return usrDao.getCountByClassificationAndPastday(classification, start, now);
+	}
+
+	public int getCountAllByPastday(String start, String now) {
+		return usrDao.getCountAllByPastday(start, now);
+	}
+
+	public void addReason(Map<String, Object> param) {
+		usrDao.addReason(param);		
+	}
+
+	public void doInvisible(int id) {
+		usrDao.doInvisible(id);
+	}
 	
 }

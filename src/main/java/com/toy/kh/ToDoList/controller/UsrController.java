@@ -21,10 +21,50 @@ public class UsrController {
 	@Autowired
 	private UsrService usrService;
 	
+	@RequestMapping("/usr/fail_detail")
+	public String showFail(HttpServletRequest req) {
+		// 0으로만 이뤄진 everyday list를 제외한 어제까지의 일정 중, success가 0인 항목을 가져옴
+		String start = "1111-11-11";
+		String now = Util.getNowDateStr();
+		List<ToDoList> failes = usrService.getFailes(start, now);
+		
+		// 분류별 그래프를 만들기 위한 문자열
+		String classification = "취미,운동,쇼핑,위생,자기개발,건강,봉사,기타";
+		// 실패한 모든 일정의 갯수
+		int realTotal = usrService.getCountAllByPastday(start, now);
+		// 전체에서 각 분류의 비율들을 담은 리스트
+		float[] totalRate = new float[8];
+		// 분류 내에서 실패한 일정의 비율
+		float[] failRate = new float[8];
+		
+		for(int i=0;i<8;i++) {
+			String classifi = classification.split(",")[i];
+			// 각 분류별 리스트
+			List<ToDoList> total = usrService.getCountByClassificationAndPastday(classifi,start,now);
+			// 전체에서 각 분류의 비율 구함
+			totalRate[i] = (float)total.size() / (float)realTotal * 100;
+			int cnt = 0;
+			
+			for (ToDoList one : total) {
+				if(one.getSuccess() == 0) {
+					cnt++;
+				}
+				// 각 분류별 실패비율 구함
+				failRate[i] = ((float)cnt/(float)total.size()*100);
+			}
+		}
+		req.setAttribute("failes", failes);
+		req.setAttribute("classification", classification.split(","));
+		req.setAttribute("failRate", failRate);
+		req.setAttribute("totalRate", totalRate);
+		
+		return "usr/fail_detail";
+	}
+	
 	@RequestMapping("/usr/repeat_list")
 	public String showRepeat(HttpServletRequest req) {
 		// 매일 할 일 구분용
-		String check = "0000-00-00 00:00:00";
+		String check = "0000-00-00";
 		
 		// 매일 할 일 리스트
 		List<ToDoList>toDos = usrService.getListByZero(check);
@@ -114,6 +154,28 @@ public class UsrController {
 		usrService.addDoList(param);
 		
 		return Util.msgAndReplace("일정이 작성되었습니다.", "daily_list?day="+param.get("day"));
+	}
+	
+	@RequestMapping("/usr/doAddReason")
+	@ResponseBody
+	public String doAddReason(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		// 할 일을 실패한 이유 추가
+		usrService.addReason(param);
+		
+		return Util.msgAndReplace("이유가 작성되었습니다.", "fail_detail");
+	}
+	
+	@RequestMapping("/usr/doInvisible")
+	@ResponseBody
+	public String doInvisible(Integer id) {
+
+		if(id == null) {
+			return Util.msgAndBack("id를 입력해주세요.");
+		}
+		// 실제 삭제가 아닌 리스트에만 안보이도록 함
+		usrService.doInvisible(id);
+		
+		return Util.msgAndReplace("일정이 삭제되었습니다.", "fail_detail");
 	}
 	
 	@RequestMapping("/usr/doDelete")

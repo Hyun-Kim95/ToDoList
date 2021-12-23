@@ -33,10 +33,57 @@
 		WHERE id = #{id}
 	</update>
 
+	<update id="addReason">
+		UPDATE ToDoList
+		<set>
+			reason = #{reason},
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="doInvisible">
+		UPDATE ToDoList
+		<set>
+			visible = 0,
+		</set>
+		WHERE id = #{id}
+	</update>
+	
 	<select id="getListByDate" resultType="ToDoList">
 		SELECT *
 		FROM ToDoList
-       	WHERE doDate between #{startDay} and #{endDay}
+       	WHERE doDate = #{doDate}
+		ORDER BY id DESC
+	</select>
+	
+	<select id="getFailes" resultType="ToDoList">
+		SELECT *
+		FROM ToDoList
+       	WHERE success = 0
+       	<![CDATA[
+       	AND doDate > #{start} AND  doDate < #{now}
+       	]]>
+		ORDER BY doDate DESC
+	</select>
+	
+	<select id="getCountByClassificationAndPastday" resultType="ToDoList">
+		SELECT *
+		FROM ToDoList
+       	WHERE 1
+       	<![CDATA[
+       	AND doDate > #{start} AND  doDate < #{now}
+       	]]>
+       	AND classification = #{classification}
+		ORDER BY doDate DESC
+	</select>
+	
+	<select id="getCountAllByPastday" resultType="int">
+		SELECT COUNT(*)
+		FROM ToDoList
+		WHERE 1
+		<![CDATA[
+       	AND doDate > #{start} AND  doDate < #{now}
+       	]]>
 		ORDER BY doDate DESC
 	</select>
 	
