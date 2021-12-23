@@ -80,5 +80,23 @@ public class UsrService {
 	public void doInvisible(int id) {
 		usrDao.doInvisible(id);
 	}
+
+	public int getCountByFailes(String start, String now) {
+		return getFailes(start, now).size();
+	}
+
+	public void doSuccess(int id) {
+		usrDao.doSuccess(id);
+	}
+
+	public void doSuccessByCycle(int id) {
+		// 사이클의 마지막 순서를 성공하면 다시 처음으로 돌아가기 위한 코드
+		if(usrDao.getCycles().size() == usrDao.getCycle(id).getNumber()) {
+			usrDao.UnSuccessByCycle(id);
+		}else {
+			usrDao.UnSuccessByCycle(id);
+			usrDao.doSuccessByCycle(id);			
+		}
+	}
 	
 }

@@ -21,6 +21,100 @@ public class UsrController {
 	@Autowired
 	private UsrService usrService;
 	
+	@RequestMapping("/usr/main")
+	public String showMain(HttpServletRequest req) {
+		String start = "1111-11-11";
+		String now = Util.getNowDateStr();
+		
+		List<ToDoList> todays = usrService.getListByDate(now);
+		List<ToDoList> tomorrows = usrService.getListByDate(Util.getTomorrowDateStr());
+		List<ToDoList> everydays = usrService.getListByDate("0000-00-00");
+		List<CycleList> cycles = usrService.getCycles();
+		int chk = 0;
+		for (CycleList cycle : cycles) {
+			if(chk == 1) {
+				req.setAttribute("num", cycle.getNumber());
+				break;
+			}
+			if(cycle.getSuccess() == 1) {
+				chk++;
+			}
+		}
+		if(chk == 0) {
+			req.setAttribute("cycle1", 0);
+		}
+		
+		// 어제까지의 전체 목록의 갯수(반복제외)
+		float totalCount = usrService.getCountAllByPastday(start, now);
+		// 실패갯수 구하는 함수를 이용하여 성공갯수 구함
+		float successCount = totalCount - usrService.getCountByFailes(start, now);
+		// 성공률 
+		float success_rate = (successCount / totalCount) * 100;
+
+		// daily graph 를 위한 날짜형식 변경
+		String today = now.split("-")[1] + "-" + now.split("-")[2];
+		
+		// main페이지로 보내줄 일자목록
+		String[] day = new String[8];
+		// 일자별 성공률
+		float[] dayRate = new float[8];
+		
+		// 최근 8일을 보내줄 거임
+		for(int i=7;i>=0;i--) {
+			day[i] = today;
+			// 해당 일자의 일정들
+			List<ToDoList> todolist = usrService.getListByDate(now.split("-")[0] + "-" + today);
+			int cnt = 0;
+			for (ToDoList todo : todolist) {
+				if(todo.getSuccess() == 1) {
+					cnt++;
+				}
+			}
+			// 성공한 갯수를 구해서 일자별 성공률을 구함
+			dayRate[i] = todolist.size()!=0 ? ((float)cnt / (float)todolist.size() * 100) : 0;
+			
+			if(today.split("-")[1].equals("1")) {
+				if(today.split("-")[0].equals("1")) {
+					today = "12-31";
+					now = (Integer.parseInt(now.split("-")[0])-1) + "-12-31";
+				}else {
+					today = (Integer.parseInt(today.split("-")[0])-1) + "-" + Util.lastday(Integer.parseInt(now.split("-")[0]), (Integer.parseInt(today.split("-")[0])-1));
+				}
+			}else {				
+				today = today.split("-")[0] + "-" + (Integer.parseInt(today.split("-")[1])-1);
+			}
+		}
+		
+		req.setAttribute("cycles", cycles);
+		req.setAttribute("tomorrows", tomorrows);
+		req.setAttribute("everydays", everydays);
+		req.setAttribute("todays", todays);
+		req.setAttribute("dayRate", dayRate);
+		req.setAttribute("day", day);
+		req.setAttribute("success_rate", success_rate);
+		return "usr/main";
+	}
+	
+	@RequestMapping("/usr/doSuccess")
+	@ResponseBody
+	public String doSuccess(@RequestParam Map<String, Object> param) {
+		
+		if(param.get("id") == null) {
+			return Util.msgAndBack("id를 입력해주세요.");
+		}
+		
+		int id = Integer.parseInt(param.get("id").toString());
+		
+		if(param.get("success") != null && param.get("success").toString().equals("1")) {
+			usrService.doSuccessByCycle(id);
+		}else {
+			usrService.doSuccess(id);
+		}
+		
+		
+		return Util.msgAndReplace("일정이 성공처리 되었습니다.", "main");
+	}
+	
 	@RequestMapping("/usr/fail_detail")
 	public String showFail(HttpServletRequest req) {
 		// 0으로만 이뤄진 everyday list를 제외한 어제까지의 일정 중, success가 0인 항목을 가져옴

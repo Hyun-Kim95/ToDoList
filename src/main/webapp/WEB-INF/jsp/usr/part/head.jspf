@@ -29,10 +29,10 @@
 				<a href="main" class="py-9 px-9 sm:px-16">main</a>
 			</li>
 			<li class="py-10 hover:bg-blue-100">
-				<a href="fail_detail" class="py-9 px-9 sm:px-16">fail_detail</a>
+				<a href="fail_detail" class="py-9 px-5 sm:px-16">fail_detail</a>
 			</li>
 			<li class="py-10 hover:bg-blue-100">
-				<a href="daily_list" class="py-9 px-9 sm:px-16">daily_list</a>
+				<a href="daily_list" class="py-9 px-5 sm:px-16">daily_list</a>
 			</li>
 			<li class="py-10 hover:bg-blue-100">
 				<a href="repeat_list" class="py-9 px-5 sm:px-16">repeat_list</a>

@@ -46,4 +46,12 @@ public interface UsrDao {
 
 	void doInvisible(@Param("id")int id);
 
+	void doSuccess(@Param("id")int id);
+
+	void UnSuccess();
+
+	void UnSuccessByCycle(@Param("id")int id);
+	
+	void doSuccessByCycle(@Param("id")int id);
+
 }

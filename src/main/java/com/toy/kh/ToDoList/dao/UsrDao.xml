@@ -49,6 +49,38 @@
 		WHERE id = #{id}
 	</update>
 	
+	<update id="doSuccess">
+		UPDATE ToDoList
+		<set>
+			success = 1,
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="UnSuccess">
+		UPDATE ToDoList
+		<set>
+			success = 0,
+		</set>
+		WHERE doDate = "0000-00-00 00:00:00"
+	</update>
+	
+	<update id="doSuccessByCycle">
+		UPDATE CycleList
+		<set>
+			success = 1,
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="UnSuccessByCycle">
+		UPDATE CycleList
+		<set>
+			success = 0,
+		</set>
+		WHERE 1
+	</update>
+	
 	<select id="getListByDate" resultType="ToDoList">
 		SELECT *
 		FROM ToDoList
