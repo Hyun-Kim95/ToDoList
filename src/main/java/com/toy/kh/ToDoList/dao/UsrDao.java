@@ -15,7 +15,7 @@ public interface UsrDao {
 
 	void addDoList(@RequestParam Map<String, Object> param);
 
-	List<ToDoList> getListByDate(@Param("startDay") String startDay,@Param("endDay") String endDay);
+	List<ToDoList> getListByDate(@Param("doDate") String doDate);
 
 	void deleteDo(@Param("id")int id);
 

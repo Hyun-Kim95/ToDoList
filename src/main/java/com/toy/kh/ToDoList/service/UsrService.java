@@ -20,8 +20,8 @@ public class UsrService {
 		usrDao.addDoList(param);
 	}
 
-	public List<ToDoList> getListByDate(String startDay, String endDay) {
-		return usrDao.getListByDate(startDay, endDay);
+	public List<ToDoList> getListByDate(String doDate) {
+		return usrDao.getListByDate(doDate);
 	}
 
 	public void deleteDo(int id) {

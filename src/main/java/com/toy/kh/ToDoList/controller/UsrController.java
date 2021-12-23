@@ -38,7 +38,7 @@ public class UsrController {
 		req.setAttribute("cycleNum", cycleNum);
 		return "usr/repeat_list";
 	}
-	
+
 	@RequestMapping("/usr/doAddRepeat")
 	@ResponseBody
 	public String doAddRepeat(@RequestParam Map<String, Object> param, HttpServletRequest req) {
@@ -47,7 +47,7 @@ public class UsrController {
 		}
 		
 		// 시간정보 임의로 추가(매일 반복 일정은 전부 0으로 통일)
-		String doDate = "0000-00-00 00:00:00";
+		String doDate = "0000-00-00";
 		param.put("doDate", doDate);
 		
 		usrService.addDoList(param);
@@ -90,11 +90,9 @@ public class UsrController {
 		}else {
 			selectedDay = day;
 		}
-		String startDay = selectedDay+" 00:00:00";
-		String endDay = selectedDay+" 23:59:59";
 		
 		// 선택한 날짜의 todo 리스트를 가져옴
-		List<ToDoList>toDos = usrService.getListByDate(startDay, endDay);
+		List<ToDoList>toDos = usrService.getListByDate(selectedDay);
 		
 		req.setAttribute("selectedDay", selectedDay);
 		req.setAttribute("toDos", toDos);
@@ -110,7 +108,7 @@ public class UsrController {
 		}
 		
 		// 선택한 날짜에 시간정보 임의로 추가
-		String doDate = param.get("day").toString()+" 00:00:00";
+		String doDate = param.get("day").toString();
 		param.put("doDate", doDate);
 		
 		usrService.addDoList(param);
@@ -120,11 +118,8 @@ public class UsrController {
 	
 	@RequestMapping("/usr/doDelete")
 	@ResponseBody
-	public String doDelete(Integer id, @RequestParam(defaultValue = "1111-11-11 11:11:11")String day) {
+	public String doDelete(Integer id, @RequestParam(defaultValue = "1111-11-11")String day) {
 
-		// 삭제 후에 선택한 날짜로 돌아가기 위해서
-		day = day.split(" ")[0];
-		
 		if(id == null) {
 			return Util.msgAndBack("id를 입력해주세요.");
 		}
