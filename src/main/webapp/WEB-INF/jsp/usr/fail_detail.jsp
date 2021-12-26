@@ -92,9 +92,6 @@ function Add__reasonAndSubmit(form) {
 		"${classification[6]}",
 		"${classification[7]}",
 	];
- 	const rate = [
-	  
-  	];
   	const dataBarChart = {
     	labels: labelsBarChart,
     	datasets: [

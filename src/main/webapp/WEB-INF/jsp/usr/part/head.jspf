@@ -20,8 +20,8 @@
 </head>
 <body class="bg-gray-100">
 <header class="top-bar h-20 bg-white">
-	<div class="container mx-auto h-full flex">
-		<div id="OpenBtn" class="flex-grow flex items-center text-3xl ml-1 mr-10">
+	<div class="container mx-auto h-full w-screen flex">
+		<div id="OpenBtn" class="flex items-center text-3xl px-2">
 			<i class="fas fa-bars"></i>
 		</div>
 		<ul id="sidebar" class="text-center hidden fixed inset-0 bg-white w-2/6 h-screen sm:text-2xl">
@@ -38,20 +38,18 @@
 				<a href="repeat_list" class="py-9 px-5 sm:px-16">repeat_list</a>
 			</li>
 		</ul>
-		
-		<a href="/usr/main" class="font-bold text-3xl flex items-center ml-2 flex-grow">
-			<span>Detail Calindar</span>
-		</a>
-
-		<nav class="menu-box-1">
-			<ul class="flex h-full">
-				<li>
-					<a class="px-4 flex items-center h-full hover:underline" href="/usr/member/doLogout">
-						<span>로그아웃</span>
-					</a>
-				</li>
-			</ul>
-		</nav>
+		<div class="flex-grow"></div>
+		<div class="flex items-center px-12">
+			<a href="/usr/main" class="font-bold text-3xl flex items-center">
+				<span>Detail Calindar</span>
+			</a>
+		</div>
+		<div class="flex-grow"></div>
+		<div>
+			<a class="flex items-center h-full hover:underline" href="/usr/member/doLogout">
+				<span>로그아웃</span>
+			</a>
+		</div>
 	</div>
 </header>
 
