@@ -15,4 +15,5 @@ public class ToDoList {
 	private int success;
 	private String reason;
 	private int visible;
+	private String user;
 }

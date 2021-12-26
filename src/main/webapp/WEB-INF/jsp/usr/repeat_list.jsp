@@ -5,6 +5,7 @@
 <title>repeat_list</title>
 <%@ include file="part/head.jspf"%>
 <form action="doAddRepeat" method="POST" class="mx-2">
+	<input type="hidden" name="user" value="${loginedMember}">
 	<table class="bg-white shadow rounded container mx-auto p-8 mt-8">
 		<tr class="shadow">
 			<th colspan="7">

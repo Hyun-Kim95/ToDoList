@@ -8,13 +8,15 @@
 		INSERT INTO ToDoList
 		SET doDate = #{doDate},
 		classification = #{classification},
-		contents = #{contents}
+		contents = #{contents},
+		`user` = #{user}
 	</insert>
 	
 	<insert id="addDoCycle" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO CycleList
 		SET number = #{number},
-		contents = #{contents}
+		contents = #{contents},
+		`user` = #{user}
 	</insert>
 
 	<update id="addNumber">
@@ -23,6 +25,7 @@
 			number = number+1,
 		</set>
 		WHERE id = #{id}
+		AND `user` = #{user}
 	</update>
 	
 	<update id="subNumber">
@@ -31,6 +34,7 @@
 			number = number-1,
 		</set>
 		WHERE id = #{id}
+		AND `user` = #{user}
 	</update>
 
 	<update id="addReason">
@@ -39,6 +43,7 @@
 			reason = #{reason},
 		</set>
 		WHERE id = #{id}
+		AND `user` = #{user}
 	</update>
 	
 	<update id="doInvisible">
@@ -47,6 +52,7 @@
 			visible = 0,
 		</set>
 		WHERE id = #{id}
+		AND `user` = #{user}
 	</update>
 	
 	<update id="doSuccess">
@@ -63,6 +69,7 @@
 			success = 0,
 		</set>
 		WHERE doDate = "0000-00-00 00:00:00"
+		AND `user` = #{user}
 	</update>
 	
 	<update id="doSuccessByCycle">
@@ -71,6 +78,7 @@
 			success = 1,
 		</set>
 		WHERE id = #{id}
+		AND `user` = #{user}
 	</update>
 	
 	<update id="UnSuccessByCycle">
@@ -78,13 +86,14 @@
 		<set>
 			success = 0,
 		</set>
-		WHERE 1
+		WHERE `user` = #{user}
 	</update>
 	
 	<select id="getListByDate" resultType="ToDoList">
 		SELECT *
 		FROM ToDoList
        	WHERE doDate = #{doDate}
+       	AND user = #{user}
 		ORDER BY id DESC
 	</select>
 	
@@ -95,6 +104,7 @@
        	<![CDATA[
        	AND doDate > #{start} AND  doDate < #{now}
        	]]>
+       	AND `user` = #{user}
 		ORDER BY doDate DESC
 	</select>
 	
@@ -106,6 +116,7 @@
        	AND doDate > #{start} AND  doDate < #{now}
        	]]>
        	AND classification = #{classification}
+       	AND `user` = #{user}
 		ORDER BY doDate DESC
 	</select>
 	
@@ -116,6 +127,7 @@
 		<![CDATA[
        	AND doDate > #{start} AND  doDate < #{now}
        	]]>
+       	AND `user` = #{user}
 		ORDER BY doDate DESC
 	</select>
 	
@@ -127,19 +139,21 @@
 	<delete id="deleteCycle">
 		DELETE FROM CycleList
 		WHERE id = #{id}
+		AND `user` = #{user}
 	</delete>
 	
 	<select id="getListByZero" resultType="ToDoList">
 		SELECT *
 		FROM ToDoList
        	WHERE doDate = #{doDate}
+       	AND `user` = #{user}
 		ORDER BY id DESC
 	</select>
 	
 	<select id="getCycles" resultType="CycleList">
 		SELECT *
 		FROM CycleList
-       	WHERE 1
+       	WHERE `user` = #{user}
 		ORDER BY `number` ASC
 	</select>
 	
@@ -147,11 +161,12 @@
 		SELECT *
 		FROM CycleList
        	WHERE id = #{id}
+       	AND `user` = #{user}
 	</select>
 	
 	<select id="getCountCycles" resultType="int">
 		SELECT COUNT(*)
 		FROM CycleList
-		WHERE 1
+		WHERE `user` = #{user}
 	</select>
 </mapper>

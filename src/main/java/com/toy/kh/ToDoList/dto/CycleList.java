@@ -12,4 +12,5 @@ public class CycleList {
 	private int number;
 	private String contents;
 	private int success;
+	private String user;
 }

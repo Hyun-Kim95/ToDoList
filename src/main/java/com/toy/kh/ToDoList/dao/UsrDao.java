@@ -15,43 +15,43 @@ public interface UsrDao {
 
 	void addDoList(@RequestParam Map<String, Object> param);
 
-	List<ToDoList> getListByDate(@Param("doDate") String doDate);
+	List<ToDoList> getListByDate(@Param("doDate") String doDate,@Param("user") String user);
 
-	void deleteDo(@Param("id") int id);
+	void deleteDo(@Param("id") int id,@Param("user") String user);
 
-	List<ToDoList> getListByZero(@Param("doDate") String doDate);
+	List<ToDoList> getListByZero(@Param("doDate") String doDate,@Param("user") String user);
 
-	List<CycleList> getCycles();
+	List<CycleList> getCycles(@Param("user")String user);
 
-	int getCountCycles();
+	int getCountCycles(@Param("user")String user);
 
 	void addDoCycle(Map<String, Object> param);
 
-	void addNumber(@Param("id") int id);
+	void addNumber(@Param("id") int id,@Param("user") String user);
 
-	void deleteCycle(@Param("id") int id);
+	void deleteCycle(@Param("id") int id,@Param("user") String user);
 
-	CycleList getCycle(@Param("id") int id);
+	CycleList getCycle(@Param("id") int id,@Param("user") String user);
 
-	void subNumber(@Param("id") int id);
+	void subNumber(@Param("id") int id,@Param("user") String user);
 
-	List<ToDoList> getFailes(@Param("start") String start, @Param("now") String now);
+	List<ToDoList> getFailes(@Param("start") String start, @Param("now") String now,@Param("user") String user);
 
 	List<ToDoList> getCountByClassificationAndPastday(@Param("classification") String classification,
-			@Param("start") String start, @Param("now") String now);
+			@Param("start") String start, @Param("now") String now,@Param("user") String user);
 
-	int getCountAllByPastday(@Param("start") String start, @Param("now") String now);
+	int getCountAllByPastday(@Param("start") String start, @Param("now") String now,@Param("user") String user);
 
 	void addReason(Map<String, Object> param);
 
-	void doInvisible(@Param("id")int id);
+	void doInvisible(@Param("id")int id, @Param("user")String user);
 
-	void doSuccess(@Param("id")int id);
+	void doSuccess(@Param("id")int id,@Param("user") String user);
 
 	void UnSuccess();
 
-	void UnSuccessByCycle(@Param("id")int id);
+	void UnSuccessByCycle(@Param("id")int id, @Param("user")String user);
 	
-	void doSuccessByCycle(@Param("id")int id);
+	void doSuccessByCycle(@Param("id")int id, @Param("user")String user);
 
 }

@@ -52,6 +52,7 @@ function Add__reasonAndSubmit(form) {
 	 				<form onsubmit="Add__reasonAndSubmit(this); return false;" action="doAddReason" method="POST">
 	 					<!-- id값으로 해당 정보의 이유를 추가해야 해서 -->
 	 					<input type="hidden" name="id" value="${fail.id}"/>
+	 					<input type="hidden" name="user" value="${loginedMember}"/>
 		 				<th colspan="5" class="border-r-2">
 		 					<input type="text" name="reason" class="form-row-input w-full rounded-sm" placeholder="이유를 입력해주세요."/>
 		 				</th>
@@ -77,7 +78,7 @@ function Add__reasonAndSubmit(form) {
 <!-- 분류별 실패한 확률 -->
 <div class="shadow rounded overflow-hidden container bg-white mx-auto mt-8">
   <div class="py-1 bg-blue-100 text-center text-xl">fail chart</div>
-  <canvas class="p-5" id="chartBar"></canvas>  
+  <canvas class="p-5" id="chartBar"></canvas>
 </div>
 <!-- Chart bar -->
 <script>

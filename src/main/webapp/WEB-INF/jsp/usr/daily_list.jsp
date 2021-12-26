@@ -84,7 +84,7 @@
         </tbody>
     </table>
    </form>
-   <form action="doAdd?day=${selectedDay}" method="POST" class="mx-2">
+   <form action="doAdd?day=${selectedDay}&user=${loginedMember}" method="POST" class="mx-2">
 	<table class="bg-white shadow rounded container mx-auto p-8 mt-8">
 		<tr class="shadow">
 			<th colspan="7">
