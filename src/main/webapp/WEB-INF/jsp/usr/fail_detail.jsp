@@ -29,24 +29,24 @@ function Add__reasonAndSubmit(form) {
 <!-- 실패한 이유를 작성한 후에 삭제 버튼이 생기도록 만듬 -->
 <table class="bg-white shadow rounded container mx-auto p-8 mt-8">
 	<tr class="shadow">
-		<td colspan="13">
+		<th colspan="13">
 			<div class="bg-blue-100 text-center text-xl">fail list</div>
-		</td>
+		</th>
 	</tr>
 	<tr class="border-b-2 bg-green-100">
-		<th colspan="1" class="border-r-2">날짜</th>
-		<th colspan="1" class="border-r-2">분류</th>
+		<th class="border-r-2">날짜</th>
+		<th class="border-r-2">분류</th>
 		<th colspan="5" class="border-r-2">내용</th>
 		<th colspan="5" class="border-r-2">이유</th>
-		<th colspan="1" class="border-r-2">작성/삭제<th>
+		<th class="border-r-2">작성/삭제</th>
 	</tr>
  	<c:forEach items="${failes}" var="fail">
  		<c:if test="${fail.visible == 1}">
 	 		<tr class="border-b-2">
 		 		<fmt:parseDate var="parseDate" value="${fail.doDate}" pattern="yyyy-MM-dd"/>
 				<fmt:formatDate var="resultDt" value="${parseDate}" pattern="yyyy-MM-dd"/>
-	 			<th colspan="1" class="border-r-2">${resultDt}</th>
-	 			<th colspan="1" class="border-r-2">${fail.classification}</th>
+	 			<th class="border-r-2">${resultDt}</th>
+	 			<th class="border-r-2">${fail.classification}</th>
 	 			<th colspan="5" class="border-r-2">${fail.contents}</th>
 	 			<c:if test="${fail.reason == null}">
 	 				<form onsubmit="Add__reasonAndSubmit(this); return false;" action="doAddReason" method="POST">

@@ -102,7 +102,7 @@
 		FROM ToDoList
        	WHERE success = 0
        	<![CDATA[
-       	AND doDate > #{start} AND  doDate < #{now}
+       	AND doDate > #{start} AND doDate < #{now}
        	]]>
        	AND `user` = #{user}
 		ORDER BY doDate DESC
@@ -113,7 +113,7 @@
 		FROM ToDoList
        	WHERE 1
        	<![CDATA[
-       	AND doDate >= #{start} AND  doDate <= #{last}
+       	AND doDate >= #{start} AND doDate <= #{last}
        	]]>
        	AND `user` = #{user}
 		ORDER BY doDate DESC

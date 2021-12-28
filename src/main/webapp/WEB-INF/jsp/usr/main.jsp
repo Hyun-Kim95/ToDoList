@@ -33,7 +33,7 @@
 							<span class="flex-grow"></span>
 							<c:if test="${today.success == 0}">
 								<a onclick="if ( !confirm('성공처리 하시겠습니까?') ) return false;"
-									href="doSuccess?id=${today.id}&user=${loginedMember}"
+									href="doSuccess?id=${today.id}&user=${loginedMember.loginId}"
 									class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold px-2 rounded">성공</a>
 							</c:if>
 							<c:if test="${today.success == 1}">
@@ -56,7 +56,7 @@
 							<span class="flex-grow"></span>
 							<c:if test="${everyday.success == 0}">
 								<a onclick="if ( !confirm('성공처리 하시겠습니까?') ) return false;"
-									href="doSuccess?id=${everyday.id}"
+									href="doSuccess?id=${everyday.id}&user=${loginedMember.loginId}"
 									class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold px-2 rounded">성공</a>
 							</c:if>
 							<c:if test="${everyday.success == 1}">
@@ -95,7 +95,7 @@
 							<span>${cycle.contents}</span>
 							<c:if test="${cycle.number == 1 && cycle1 == 0 || cycle1 != 0 && cycle.number == num}">
 								<a onclick="if ( !confirm('성공처리 하시겠습니까?') ) return false;"
-									href="doSuccess?id=${cycle.id}&success=1"
+									href="doSuccess?id=${cycle.id}&success=1&user=${loginedMember.loginId}"
 									class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold px-2 rounded">성공</a>
 							</c:if>
 						</li>	

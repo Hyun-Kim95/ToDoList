@@ -102,7 +102,7 @@ public class UsrService {
 
 	public List<ToDoList> getListByMonth(String month, String user) {
 		// 해당 월의 마지막 일자를 구함
-		int lastDay = Util.lastday(Integer.parseInt(month.split("-")[0]), Integer.parseInt(month.split("-")[1]));
+		int lastDay = Util.lastday(Integer.parseInt(month.split("-")[0]), Integer.parseInt(month.split("-")[1])-1);
 		// 해당 월의 할일들을 리턴
 		return usrDao.getListByMonth(month+"-01", month+"-"+lastDay, user);
 	}
