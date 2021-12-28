@@ -48,10 +48,15 @@ public class UsrController {
 		
 		// 어제까지의 전체 목록의 갯수(반복제외)
 		float totalCount = usrService.getCountAllByPastday(start, now, user);
-		// 실패갯수 구하는 함수를 이용하여 성공갯수 구함
-		float successCount = totalCount - usrService.getCountByFailes(start, now, user);
-		// 성공률 
-		float success_rate = (successCount / totalCount) * 100;
+		
+		float success_rate = 0;
+		if(totalCount != 0) {
+			// 실패갯수 구하는 함수를 이용하여 성공갯수 구함
+			float successCount = totalCount - usrService.getCountByFailes(start, now, user);
+			// 성공률 
+			success_rate = (successCount / totalCount) * 100;
+		}
+
 
 		// daily graph 를 위한 날짜형식 변경
 		String today = now.split("-")[1] + "-" + now.split("-")[2];
@@ -99,8 +104,8 @@ public class UsrController {
 	
 	@RequestMapping("/usr/doSuccess")
 	@ResponseBody
-	public String doSuccess(@RequestParam Map<String, Object> param, HttpServletRequest req ) {
-		String user = ((Member) req.getAttribute("loginedMember")).getLoginId();
+	public String doSuccess(@RequestParam Map<String, Object> param) {
+		String user = param.get("user").toString();
 		
 		if(param.get("id") == null) {
 			return Util.msgAndBack("id를 입력해주세요.");
@@ -113,7 +118,6 @@ public class UsrController {
 		}else {
 			usrService.doSuccess(id, user);
 		}
-		
 		
 		return Util.msgAndReplace("일정이 성공처리 되었습니다.", "main");
 	}
@@ -181,8 +185,7 @@ public class UsrController {
 	@RequestMapping("/usr/doAddRepeat")
 	@ResponseBody
 	public String doAddRepeat(@RequestParam Map<String, Object> param) {
-		String user = ((Member) param.get("user")).getLoginId();
-		param.replace("user", user);
+
 		if(param.get("contents") == "") {
 			return Util.msgAndBack("내용을 입력해주세요.");
 		}
@@ -199,8 +202,8 @@ public class UsrController {
 	@RequestMapping("/usr/doAddCycle")
 	@ResponseBody
 	public String doAddCycle(@RequestParam Map<String, Object> param) {
-		String user = ((Member) param.get("user")).getLoginId();
-		param.replace("user", user);
+		String user = param.get("user").toString();
+		
 		if(param.get("contents") == "") {
 			return Util.msgAndBack("내용을 입력해주세요.");
 		}
@@ -237,9 +240,12 @@ public class UsrController {
 		
 		// 선택한 날짜의 todo 리스트를 가져옴
 		List<ToDoList>toDos = usrService.getListByDate(selectedDay, user);
+		// 선택된 달의 전체 일정을 가져오기 위해서 선택된 일자의 연,월을 전달함
+		List<ToDoList>MonthToDo = usrService.getListByMonth(selectedDay.split("-")[0]+"-"+selectedDay.split("-")[1], user);
 		
 		req.setAttribute("selectedDay", selectedDay);
 		req.setAttribute("toDos", toDos);
+		req.setAttribute("MonthToDo", MonthToDo);
 		
 		return "usr/daily_list";
 	}
@@ -247,8 +253,6 @@ public class UsrController {
 	@RequestMapping("/usr/doAdd")
 	@ResponseBody
 	public String doAdd(@RequestParam Map<String, Object> param) {
-		String user = ((Member) param.get("user")).getLoginId();
-		param.replace("user", user);
 		if(param.get("contents") == "") {
 			return Util.msgAndBack("내용을 입력해주세요.");
 		}
@@ -259,14 +263,12 @@ public class UsrController {
 		
 		usrService.addDoList(param);
 		
-		return Util.msgAndReplace("일정이 작성되었습니다.", "daily_list?day="+param.get("day"));
+		return Util.msgAndReplace("일정이 작성되었습니다.", "daily_list?day="+doDate);
 	}
 	
 	@RequestMapping("/usr/doAddReason")
 	@ResponseBody
 	public String doAddReason(@RequestParam Map<String, Object> param) {
-		String user = ((Member) param.get("user")).getLoginId();
-		param.replace("user", user);
 		// 할 일을 실패한 이유 추가
 		usrService.addReason(param);
 		
@@ -293,6 +295,7 @@ public class UsrController {
 		if(id == null) {
 			return Util.msgAndBack("id를 입력해주세요.");
 		}
+		day = day.split(" ")[0];
 		
 		String replace;
 		// day 값이 디폴트면 사이클 일정에서 삭제

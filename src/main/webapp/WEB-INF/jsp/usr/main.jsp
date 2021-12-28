@@ -33,7 +33,7 @@
 							<span class="flex-grow"></span>
 							<c:if test="${today.success == 0}">
 								<a onclick="if ( !confirm('성공처리 하시겠습니까?') ) return false;"
-									href="doSuccess?id=${today.id}"
+									href="doSuccess?id=${today.id}&user=${loginedMember}"
 									class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold px-2 rounded">성공</a>
 							</c:if>
 							<c:if test="${today.success == 1}">

@@ -52,7 +52,7 @@ function Add__reasonAndSubmit(form) {
 	 				<form onsubmit="Add__reasonAndSubmit(this); return false;" action="doAddReason" method="POST">
 	 					<!-- id값으로 해당 정보의 이유를 추가해야 해서 -->
 	 					<input type="hidden" name="id" value="${fail.id}"/>
-	 					<input type="hidden" name="user" value="${loginedMember}"/>
+	 					<input type="hidden" name="user" value="${loginedMember.loginId}"/>
 		 				<th colspan="5" class="border-r-2">
 		 					<input type="text" name="reason" class="form-row-input w-full rounded-sm" placeholder="이유를 입력해주세요."/>
 		 				</th>

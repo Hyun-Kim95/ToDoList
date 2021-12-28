@@ -14,6 +14,8 @@ CREATE TABLE ToDoList(
 	classification CHAR(30) NOT NULL,
 	contents TEXT NOT NULL,
 	success TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+	reason CHAR(100),
+	`visible` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1,
 	`user` CHAR(30) NOT NULL
 );
 
