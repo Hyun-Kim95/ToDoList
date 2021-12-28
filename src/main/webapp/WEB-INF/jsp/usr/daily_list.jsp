@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.toy.kh.ToDoList.service.UsrService"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <title>daily_list</title>
 <%@ include file="part/head.jspf"%>
+
 <script>
     $(function(){
         var today = new Date();
@@ -62,7 +65,8 @@
     })
     
 </script>
-<form action="daily_list" method="GET" class="mx-2">
+<!-- 양식 다시제출이 나와서 action부분 지웠음 -->
+<form class="mx-2">
     <table id="calendar" class="bg-white shadow rounded container mx-auto p-8 mt-8">
         <thead>
             <tr class="shadow">
@@ -83,12 +87,12 @@
         <tbody>
         </tbody>
     </table>
-   </form>
-   <form action="doAdd?day=${selectedDay}&user=${loginedMember}" method="POST" class="mx-2">
+</form>
+<form action="doAdd?day=${selectedDay}&user=${loginedMember.loginId}" method="POST" class="mx-2">
 	<table class="bg-white shadow rounded container mx-auto p-8 mt-8">
 		<tr class="shadow">
 			<th colspan="7">
-				<div class="bg-blue-100">선택된 날짜 : ${selectedDay}</div>
+				<div id="selected" class="bg-blue-100">선택된 날짜 : ${selectedDay}</div>
 			</th>
 		</tr>
  	<tr class="shadow border-b-2">
@@ -129,4 +133,26 @@
  	</c:forEach>
 	</table>
 </form>
+
+<table class="bg-white shadow rounded container mx-auto p-8 mt-8">
+	<tr class="shadow">
+		<th colspan="7">
+			<div id="selected" class="bg-blue-100">이 달의 일정</div>
+		</th>
+	</tr>
+	<tr class="border-b-2 bg-green-100">
+		<th class="border-r-2" colspan="1">날짜</th>
+		<th class="border-r-2" colspan="1">분류</th>
+		<th class="border-r-2" colspan="5">내용</th>
+	</tr>
+	<c:forEach items="${MonthToDo}" var="toDo">
+		<tr class="border-b-2">
+			<fmt:parseDate var="parseDate" value="${toDo.doDate}" pattern="yyyy-MM-dd"/>
+			<fmt:formatDate var="resultDt" value="${parseDate}" pattern="yyyy-MM-dd"/>
+			<th colspan="1" class="border-r-2">${resultDt}</th>
+			<th colspan="1" class="border-r-2">${toDo.classification}</th>
+			<th colspan="5" class="border-r-2">${toDo.contents}</th>
+		</tr>
+	</c:forEach>
+</table>
 <%@ include file="part/foot.jspf"%>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.toy.kh.ToDoList.dao.UsrDao;
 import com.toy.kh.ToDoList.dto.CycleList;
 import com.toy.kh.ToDoList.dto.ToDoList;
+import com.toy.kh.ToDoList.util.Util;
 
 @Service
 public class UsrService {
@@ -97,6 +98,13 @@ public class UsrService {
 			usrDao.UnSuccessByCycle(id, user);
 			usrDao.doSuccessByCycle(id, user);			
 		}
+	}
+
+	public List<ToDoList> getListByMonth(String month, String user) {
+		// 해당 월의 마지막 일자를 구함
+		int lastDay = Util.lastday(Integer.parseInt(month.split("-")[0]), Integer.parseInt(month.split("-")[1]));
+		// 해당 월의 할일들을 리턴
+		return usrDao.getListByMonth(month+"-01", month+"-"+lastDay, user);
 	}
 	
 }

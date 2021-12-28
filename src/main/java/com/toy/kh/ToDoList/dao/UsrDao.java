@@ -54,4 +54,6 @@ public interface UsrDao {
 	
 	void doSuccessByCycle(@Param("id")int id, @Param("user")String user);
 
+	List<ToDoList> getListByMonth(@Param("start")String start, @Param("last")String last, @Param("user")String user);
+
 }

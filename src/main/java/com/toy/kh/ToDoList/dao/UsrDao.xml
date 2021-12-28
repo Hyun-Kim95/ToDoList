@@ -108,6 +108,17 @@
 		ORDER BY doDate DESC
 	</select>
 	
+	<select id="getListByMonth" resultType="ToDoList">
+		SELECT *
+		FROM ToDoList
+       	WHERE 1
+       	<![CDATA[
+       	AND doDate >= #{start} AND  doDate <= #{last}
+       	]]>
+       	AND `user` = #{user}
+		ORDER BY doDate DESC
+	</select>
+	
 	<select id="getCountByClassificationAndPastday" resultType="ToDoList">
 		SELECT *
 		FROM ToDoList
